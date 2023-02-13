@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://use.typekit.net/grw6nbr.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A portfolio website by Mathias Quist Michaelsen">
+    <meta name="keywords" content="VueSJ, TypeScript, Mathias Quist Michaelsen, Makeable, Pinia">
+    <meta name="author" content="Mathias Quist Michaelsen">
+    <script src="blotter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Blotter/0.1.0/materials/channelSplitMaterial.min.js" ></script>
+
+    <title>MathiasQM</title>
+  </head>
+  <body>
+    <div id="blotter">
+      <!-- <canvas class="noise"></canvas> -->
+    </div>
+    <div id="app"></div>
+    <script>
+    
+
+          
+      var text = new Blotter.Text("mathias.", {
+            family: 'sofia-pro',
+            fill: '#000',
+            weight: 900,
+            size: 200,
+            paddingLeft: 80,
+            paddingRight: 80,
+            paddingTop: 80,
+        })
+
+        var material = new Blotter.ChannelSplitMaterial();
+        material.uniforms.uOffset.value = 0;
+        material.uniforms.uRotation.value = 0;
+        material.uniforms.uApplyBlur.value = 1; 
+        material.uniforms.uAnimateNoise.value = .3;
+
+
+        var blotter = new Blotter(material, {
+            texts: text
+        })
+
+        var scope = blotter.forText(text);
+
+        scope.appendTo(document.getElementById("blotter"));
+
+        document.onmousemove = moveIt;
+        function moveIt(event) {
+
+            material.uniforms.uRotation.value = ((event.clientX + 1000) * .1);
+            material.uniforms.uOffset.value = (event.clientX * .0001, event.clientY * .0001);
+
+        }
+    
+    </script>
+    <script type="module" src="/src/main.ts"></script>
+
+       <!-- <script>
+
+      const canvas = document.querySelector('canvas'),
+              ctx = canvas.getContext('2d')
+
+          canvas.width = canvas.height = 128
+
+          resize();
+          window.onresize = resize;
+
+          function resize() {
+            canvas.width = window.innerWidth * window.devicePixelRatio / 1
+            canvas.height = window.innerHeight * window.devicePixelRatio / 1
+            canvas.style.width = window.innerWidth + 'px'
+            canvas.style.height = window.innerHeight + 'px'
+          }
+
+          // window.setInterval('noise(ctx)',150);
+          function noise(ctx) {
+              
+            const w = ctx.canvas.width,
+                  h = ctx.canvas.height,
+                  iData = ctx.createImageData(w, h),
+                  buffer32 = new Uint32Array(iData.data.buffer),
+                  len = buffer32.length
+              let i = 1
+
+            for(; i < len;i++)
+              
+              if (Math.random() < 0.5) buffer32[i] = 0xffffffff;
+
+              ctx.putImageData(iData, 0, 0);
+          }
+
+          (function loop() {
+              noise(ctx);
+              requestAnimationFrame(loop);
+          })();
+    </script> -->
+  </body>
+</html>
